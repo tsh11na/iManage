@@ -1,0 +1,83 @@
+{% extends "imapp/base.html"%}
+{% block title %} ようこそ iManage へ {% endblock %}
+
+{% block content %}
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Top
+    </div>
+    <div class="card-body">
+        <!-- Icon Cards-->
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-primary o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-comments"></i>
+                        </div>
+                        <div class="mr-5">ログ閲覧</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="{% url 'imapp:log' %}">
+                        <span class="float-left">View logs</span>
+                        <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-warning o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-list"></i>
+                        </div>
+                        <div class="mr-5">利用登録・修正</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="{% url 'imapp:register' %}">
+                        <span class="float-left">Register and adjust</span>
+                        <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-success o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-shopping-cart"></i>
+                        </div>
+                        <div class="mr-5">未割当に変更</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="{% url 'imapp:unregister_index' 1 %}">
+                        <span class="float-left">Cancel assignment</span>
+                        <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-danger o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fa fa-fw fa-support"></i>
+                        </div>
+                        <div class="mr-5">廃棄済に変更</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="{% url 'imapp:unregister_index' 3 %}">
+                        <span class="float-left">Mark as scrapped</span>
+                        <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

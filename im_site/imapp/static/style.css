@@ -1,0 +1,9 @@
+
+table td.mytable {
+    background-color: #bde9ba;
+}
+
+.navbar-brand > img {
+    height: 40px;
+    width: auto;
+}

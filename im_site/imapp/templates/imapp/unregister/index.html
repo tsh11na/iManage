@@ -1,0 +1,48 @@
+{% extends "imapp/base.html" %}
+{% block title %} {{ mode_name }}に変更 {% endblock title %}
+
+{% block content %}
+
+    {% if changed %}
+        <li class="alert alert-success">
+            {{ changed }}を{{ mode_name }}に変更しました。
+        </li>
+    {% endif %}
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> {{ mode_name }}に変更
+        </div>
+        <div class="card-body">
+            <h6>{{ mode_name }}にする備品のSAMを選択してください。</h6>
+            <form action="{% url 'imapp:unregister_confirm' mode_id %}" method="post">
+                {% csrf_token %}
+                <div class="col-xs-3" style="max-width: 200px;">
+                    <div class="form-group">
+                        <div class="col-xs-3">
+                            <select class="form-control" id="sam" name="sam">
+                                <option value="divider" disabled>--- デスクトップPC ---</option>
+                                {% for sam in sams_of_desktop %}
+                                    <option value="{{ sam }}">{{ sam }}</option>
+                                {% endfor %}
+                                <option value="divider" disabled>--- ノートPC ---</option>
+                                {% for sam in sams_of_laptop %}
+                                    <option value="{{ sam }}">{{ sam }}</option>
+                                {% endfor %}
+                                <option value="divider" disabled>--- ディスプレイ ---</option>
+                                {% for sam in sams_of_display %}
+                                    <option value="{{ sam }}">{{ sam }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-10">
+                            <input type="submit" class="btn btn-danger" name="mode_name" value="{{ mode_name }}に変更">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

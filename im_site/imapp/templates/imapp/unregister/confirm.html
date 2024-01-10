@@ -1,0 +1,75 @@
+{% extends "imapp/base.html" %}
+{% block title %} {{ equipment.sam }}を{{ mode_name }}に変更 {% endblock title %}
+
+{% block content %}
+    <br>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i>{{ mode_name }}に変更
+        </div>
+        <div class="card-body">
+            <h6>以下の備品を{{ mode_name }}に変更します。よろしいですか？</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <tr>
+                        <td>SAM</td>
+                        <td>{{ equipment.sam }}</td>
+                    </tr>
+                    <tr>
+                        <td>区分・種類</td>
+                        <td>
+                            {% if model.desk_or_lap == 'desktop' %}
+                                デスクトップPC
+                            {% elif model.desk_or_lap == 'laptop' %}
+                                ノートPC
+                            {% else %}
+                                ディスプレイ
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>モデル名</td>
+                        <td>{{ model.model_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>メーカー</td>
+                        <td>{{ model.maker }}</td>
+                    <tr>
+                        <td>発売日</td>
+                        <td>{{ model.release_date }}
+                    </tr>
+                    <tr>
+                        <td>購入日</td>
+                        <td>{{ equipment.purchase }}</td>
+                    </tr>
+                        <td>保証期限</td>
+                        <td>{{ equipment.warranty }}</td>
+                    <tr>
+                        <td>備考</td>
+                        <td>{{ equipment.note }}</td>
+                    </tr>
+                </table>
+            </div>
+            <form action="{% url 'imapp:unregister_run' mode_id %}" method="post">
+                {% csrf_token %}
+                <div class="col-xs-3" style="max-width: 200px;">
+                    <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-10">
+                            <input type="submit" class="btn btn-primary" name="ok" value="OK">
+                            <input type="hidden" name="sam" value="{{ equipment.sam }}">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form action="{% url 'imapp:unregister_index' mode_id %}" method="get">
+                <div class="col-xs-3" style="max-width: 200px;">
+                    <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-10">
+                            <input type="submit" class="btn btn-danger" name="cancel" value="キャンセル">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

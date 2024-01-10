@@ -1,0 +1,243 @@
+﻿{% extends "imapp/base.html"%}
+{% block title %} 備品ログの閲覧 {% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+</head>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> ログ閲覧
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <form method="post" action="{% url 'imapp:log' %}">
+                {% csrf_token %}
+                <div>
+                    <table>
+                        <tr>
+                            <label>ログの時刻を設定</label>
+                            <th><input type="date" id="today" name="select_time" max={{ CurTime }} class="form-control" style="width:200px;" required></th>
+                            <th>    <input type="submit" value="ログの時刻を設定する" class="btn btn-success"></th>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {{ CurTime }}時点での、備品ごとの利用者を表示しています。<a href="{% url 'imapp:sclog' %}"> 廃棄予定・廃棄済みの備品のログを見る</a><br>
+            <hr>
+            デスクトップPC
+            <hr>
+            <table class="table table-bordered" id="DesktopDataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> OS </th>
+                        <th> CPU </th>
+                        <th> ドライブ </th>
+                        <th> メモリ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> OS </th>
+                        <th> CPU </th>
+                        <th> ドライブ </th>
+                        <th> メモリ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </tfoot>
+                {% if sam_user_rows %}
+                <tbody>
+                    {% for question in sam_user_rows %}
+                    {% if question.0 in desktop_valid_sams %}
+                    <tr>
+                        <td>{{ question.0 }}</td>
+                        <td>{{ question.1 }}</td>
+                        <td>{{ question.2.purchase }}</td>
+                        <td>{{ question.2.warranty }}</td>
+                        <td>{{ question.3.model_name }}</td>
+                        <td>{{ question.5 }}</td>
+                        <td>{{ question.6 }}</td>
+                        <td>{{ question.7 }}</td>
+                        <td>{{ question.8 }}</td>
+                        <td>{{ question.3.maker }}</td>
+                        <td>{{ question.3.release_date }}</td>
+                        <td><a href="{% url 'imapp:log'%}{{ question.0 }}"> {{ question.4 }}</a></td>
+                        <td>{{ question.2.note }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <p>No log are available.</p>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <hr>
+            ノートPC
+            <hr>
+            <table class="table table-bordered" id="LaptopDataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> OS </th>
+                        <th> CPU </th>
+                        <th> ドライブ </th>
+                        <th> メモリ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> OS </th>
+                        <th> CPU </th>
+                        <th> ドライブ </th>
+                        <th> メモリ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </tfoot>
+                {% if sam_user_rows %}
+                <tbody>
+                    {% for question in sam_user_rows %}
+                    {% if question.0 in laptop_valid_sams %}
+                    <tr>
+                        <td>{{ question.0 }}</td>
+                        <td>{{ question.1 }}</td>
+                        <td>{{ question.2.purchase }}</td>
+                        <td>{{ question.2.warranty }}</td>
+                        <td>{{ question.3.model_name }}</td>
+                        <td>{{ question.5 }}</td>
+                        <td>{{ question.6 }}</td>
+                        <td>{{ question.7 }}</td>
+                        <td>{{ question.8 }}</td>
+                        <td>{{ question.3.maker }}</td>
+                        <td>{{ question.3.release_date }}</td>
+                        <td><a href="{% url 'imapp:log'%}{{ question.0 }}"> {{ question.4 }}</a></td>
+                        <td>{{ question.2.note }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <p>No log are available.</p>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <hr>
+            ディスプレイ
+            <hr>
+            <table class="table table-bordered" id="DisplayDataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> インチ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th> SAM </th>
+                        <th> 利用者 </th>
+                        <th> 購入日 </th>
+                        <th> 保証期限 </th>
+                        <th> モデル名 </th>
+                        <th> インチ </th>
+                        <th> メーカー </th>
+                        <th> 発売日 </th>
+                        <th> 履歴リンク </th>
+                        <th> メモ </th>
+                    </tr>
+                </tfoot>
+                {% if sam_user_rows %}
+                <tbody>
+                    {% for question in sam_user_rows %}
+                    {% if question.0 in display_valid_sams %}
+                    <tr>
+                        <td>{{ question.0 }}</td>
+                        <td>{{ question.1 }}</td>
+                        <td>{{ question.2.purchase }}</td>
+                        <td>{{ question.2.warranty }}</td>
+                        <td>{{ question.3.model_name }}</td>
+                        <td>{{ question.5 }}</td>
+                        <td>{{ question.3.maker }}</td>
+                        <td>{{ question.3.release_date }}</td>
+                        <td><a href="{% url 'imapp:log'%}{{ question.0 }}"> {{ question.4 }}</a></td>
+                        <td>{{ question.2.note }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <p>No log are available.</p>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+<!-- for calendar -->
+<script>
+    var date = new Date();
+
+    var yyyy = date.getFullYear();
+    var mm = ("0" + (date.getMonth() + 1)).slice(-2);
+    var dd = ("0" + date.getDate()).slice(-2);
+
+    document.getElementById("today").value = yyyy + '-' + mm + '-' + dd;
+</script>
+
+{% endblock %}
+
+

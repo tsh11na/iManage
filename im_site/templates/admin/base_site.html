@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin Page{% endblock %}
+{% load static %}
+
+{% block branding %}
+<h1 id="site-name">  <img src="{% static 'img/transparent_all.png' %}" style ="width:10%; height:10%" alt="logo">  <a href="{% url 'admin:index' %}">Ishikawa Lab. Machine Management System Admin Page</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

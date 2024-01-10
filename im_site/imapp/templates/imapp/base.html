@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <!--<link rel="icon" href="{% static 'favicon.ico' %}"/>-->
+</head>
+
+
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="{% url 'imapp:index' %}"> <img src="{% static 'img/transparent_all.png' %}" alt="logo"> Ishikawa Lab. Machine Manegement System</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="ログ閲覧">
+                    <a class="nav-link" href="{% url 'imapp:log' %}">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">ログ閲覧</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="利用登録・修正">
+                    <a class="nav-link" href="{% url 'imapp:register' %}">
+                        <i class="fa fa-fw fa-desktop"></i>
+                        <span class="nav-link-text">利用登録・修正</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="未割当に変更">
+                    <a class="nav-link" href="{% url 'imapp:unregister_index' 1 %}">
+                        <i class="fa fa-fw fa-user-times"></i>
+                        <span class="nav-link-text">未割当に変更</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="廃棄予定に変更">
+                    <a class="nav-link" href="{% url 'imapp:unregister_index' 2 %}">
+                        <i class="fa fa-fw fa-minus-circle"></i>
+                        <span class="nav-link-text">廃棄予定に変更</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="廃棄に変更">
+                    <a class="nav-link" href="{% url 'imapp:unregister_index' 3 %}">
+                        <i class="fa fa-fw fa-trash"></i>
+                        <span class="nav-link-text">廃棄に変更</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="管理画面">
+                    <a class="nav-link" href="{% url 'admin:index' %}">
+                        <i class="fa fa-fw fa-wrench"></i>
+                        <span class="nav-link-text">管理画面</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Ishikawa Lab. since 2006</small>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Core plugin JavaSc'ript-->
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <!-- Page level plugin 'JavaScript-->
+        <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+        <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+        <!-- Custom scripts for' all pages-->
+        <script src="{% static 'js/sb-admin.min.js' %}"></script>
+        <!-- Custom scripts for' this page-->
+        <script src="{% static 'js/sb-admin-datatables.js' %}"></script>
+        <!--<script src="{% static 'js/sb-admin-datatables.min.js' %}"></script>-->
+        <script src="{% static 'js/sb-admin-charts.min.js' %}"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿<!--  ここで SAM to USER の Log を出す用のtemplateをかく-->
+{% extends "imapp/base.html"%}
+{% block title %} LOGLOGだよ {% endblock %}
+
+{% block content %}
+<!-- Example DataTables Card-->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> {% if sam_site %} {{ sam_site }}の過去のログ一覧 {% endif %}
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th> 利用者 </th>
+                        <th> 利用開始日 </th>
+                    </tr>
+                </thead>
+
+                {% if date_user_rows %}
+                <tbody>
+                    {% for data in date_user_rows %}
+                    <tr>
+                        <td>{{ data.1 }}</td>
+                        <td>{{ data.0 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <p>No log are available.</p>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

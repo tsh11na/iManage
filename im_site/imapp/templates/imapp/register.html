@@ -1,0 +1,136 @@
+﻿{% extends "imapp/base.html"%}
+{% block title %} 利用者登録・修正 {% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> 利用者登録・修正
+    </div>
+    {% if diff.change == True %}
+    <ul class="messages">
+        <li class="alert alert-success">
+            {% for info in context_infos %}
+            {% if info.userid == diff.id %}
+            {{ info.username }}さん ({{ info.assignedyear }}) の備品を
+
+            <table>
+                {% if pre.desktop != diff.desktop %}
+                <tr>
+                    <td>デスクトップPC　</td>
+                    <td>：　</td>
+                    <td>{{ pre.desktop }}</td>
+                    <td>　　→　　</td>
+                    <td>{{ diff.desktop }}</td>
+                </tr>
+                {% endif %}
+
+                {% if pre.laptop != diff.laptop %}
+                <tr>
+                    <td>ノートPC　</td>
+                    <td>：　</td>
+                    <td>{{ pre.laptop }}</td>
+                    <td>　　→　　</td>
+                    <td>{{ diff.laptop }}</td>
+                </tr>
+                {% endif %}
+
+                {% if diff.displaychange == True %}
+                <tr>
+                    <td>ディスプレイ1　</td>
+                    <td>：　</td>
+                    <td>{{ pre.display.0 }}</td>
+                    <td>　　→　　</td>
+                    <td>{{ diff.display.0 }}</td>
+                </tr>
+                <tr>
+                    <td>ディスプレイ2　</td>
+                    <td>：　</td>
+                    <td>{{ pre.display.1 }}</td>
+                    <td>　　→　　</td>
+                    <td>{{ diff.display.1 }}</td>
+                </tr>
+                {% endif %}
+                {% endif %}
+            </table>
+            {% endfor %}
+            へ変更しました。
+        </li>
+    </ul>
+    {% endif %}
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>利用者名 (配属年度) </th>
+                        <th>デスクトップPC</th>
+                        <th>ノートPC</th>
+                        <th>ディスプレイ1</th>
+                        <th>ディスプレイ2</th>
+                        <th>割当を変更する</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for info in context_infos %}
+                    <tr>
+                        <td>{{ info.username }} ({{ info.assignedyear }}) </td>
+                        <form method="post" action="{% url 'imapp:register' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="userid" value="{{ info.userid }}">
+                            <td {% if diff.desktopchange and diff.id == info.userid %}{% if diff.desktop %}{% if diff.desktop == info.desktop %} class="mytable" {% endif %}{% endif %}{% endif %}>
+                                <select class="form-control" name="desktop-pulldown" size="1">
+                                    <option value="{{ info.desktop }}">{{ info.desktop }}</option>
+                                    <option value="divider" disabled>---</option>
+                                    {% for validdesktop in desktop_sams %}
+                                    <option value="{{ validdesktop }}">{{ validdesktop }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td {% if diff.laptopchange and diff.id == info.userid %}{% if diff.laptop %}{% if diff.laptop == info.laptop %} class="mytable" {% endif %}{% endif %}{% endif %}>
+                                <select class="form-control" name="laptop-pulldown" size="1">
+                                    <option value="{{ info.laptop }}">{{ info.laptop }}</option>
+                                    <option value="divider" disabled>---</option>
+                                    {% for validlaptop in laptop_sams %}
+                                    <option value="{{ validlaptop }}">{{ validlaptop }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+
+                            <td {% if diff.displaychange and diff.id == info.userid %}{% if diff.display %}{% if diff.display.0 == info.displays.0 or diff.display.0 == info.displays.1%} class="mytable" {% endif %}{% endif %}{% endif %}>
+                                <select class="form-control" name="display1-pulldown" size="1">
+                                    <option value="{{ info.displays.0 }}">{{ info.displays.0 }}</option>
+                                    <option value="divider" disabled>---</option>
+                                    {% for validdisplay in display_sams %}
+                                    <option value="{{ validdisplay }}">{{ validdisplay }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td {% if diff.displaychange and diff.id == info.userid %}{% if diff.display %}{% if diff.display.1 == info.displays.0 or diff.display.1 == info.displays.1%} class="mytable" {% endif %}{% endif %}{% endif %}>
+                                <select class="form-control" name="display2-pulldown" size="1">
+                                    <option value="{{ info.displays.1 }}">{{ info.displays.1 }}</option>
+                                    <option value="divider" disabled>---</option>
+                                    {% for validdisplay in display_sams %}
+                                    <option value="{{ validdisplay }}">{{ validdisplay }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="submit" class="btn btn-success" value="{{info.username}} ({{info.assignedyear}}) の割当を変更する">
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+    {% endblock %}

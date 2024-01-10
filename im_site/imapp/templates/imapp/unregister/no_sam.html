@@ -1,0 +1,14 @@
+{% extends "imapp/base.html" %}
+{% block title %} {{ mode_name }}に変更 {% endblock title %}
+
+{% block content %}
+
+    {% if changed %}
+        <li class="alert alert-success">
+            {{ changed }}を{{ mode_name }}に変更しました。
+        </li>
+    {% endif %}
+
+    <h6>選択できるSAMがありません。</h6>
+
+{% endblock %}
